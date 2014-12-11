@@ -1,16 +1,16 @@
-import 'dart:html';
+import 'package:start/start.dart';
+
 
 void main() {
-  querySelector("#sample_text_id")
-      ..text = "Click me!"
-      ..onClick.listen(reverseText);
-}
+  start(port: 3000).then((Server app) {
 
-void reverseText(MouseEvent event) {
-  var text = querySelector("#sample_text_id").text;
-  var buffer = new StringBuffer();
-  for (int i = text.length - 1; i >= 0; i--) {
-    buffer.write(text[i]);
-  }
-  querySelector("#sample_text_id").text = buffer.toString();
+    app.static('web');
+
+    app.get('/:firstname.:lastname?').listen((request) {
+      request.response
+        .header('Content-Type', 'text/html; charset=UTF-8')
+        .send('<h1>Hello, ${request.param('firstname')} ${request.param('lastname')}</h1>');
+    });
+
+  });
 }

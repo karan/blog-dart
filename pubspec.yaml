@@ -2,3 +2,5 @@ name: blog
 description: A sample web application
 dependencies:
   browser: any
+  postgresql: any
+  start: any
